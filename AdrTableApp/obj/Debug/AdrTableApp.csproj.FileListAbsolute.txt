@@ -51,3 +51,4 @@ C:\Ilya\csharp\AdrTableApp\AdrTableApp\bin\System.Web.WebPages.Razor.xml
 C:\Ilya\csharp\AdrTableApp\AdrTableApp\obj\Debug\AdrTableApp.dll
 C:\Ilya\csharp\AdrTableApp\AdrTableApp\obj\Debug\AdrTableApp.pdb
 d:\my_work_data\work\C_sharp\AdrTableApp\AdrTableApp\obj\Debug\AdrTableApp.csprojResolveAssemblyReference.cache
+C:\Ilya\csharp\AdrTableApp\AdrTableApp\obj\Debug\AdrTableApp.csprojResolveAssemblyReference.cache

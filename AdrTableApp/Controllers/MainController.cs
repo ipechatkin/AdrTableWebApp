@@ -82,6 +82,7 @@ namespace AdrTableApp.Controllers
             var country = data.country != null ? data.country : "";
             var city = data.city != null ? data.city : "";
             var street = data.street != null ? data.street : "";
+            var house = data.house <= 0 ? 0 : data.house;
             var postcode = data.postcode != null ? data.postcode : "";
 
             DateTime d1 = ParseDateFromClient(data.dateStart);
@@ -100,7 +101,7 @@ namespace AdrTableApp.Controllers
             Expression<Func<Adress, Object>>[] lambdaArr = { lambda0, lambda1, lambda2, lambda3, lambda4, lambda5 };          
             
             dataToClient.adresses = db.Adresses
-                .Where(a => a.country.Contains(country) && a.city.Contains(city) && a.postcode.StartsWith(postcode) &&
+                .Where(a => a.country.Contains(country) && a.city.Contains(city) && a.postcode.StartsWith(postcode) && (a.house >= house) &&
                     a.street.Contains(street) && (a.created >= d1) && (a.created <= d2)).ToList<Adress>().AsQueryable();
 
             if (data.needSort)

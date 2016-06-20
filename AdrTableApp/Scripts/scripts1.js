@@ -16,35 +16,39 @@ function translationService($resource) {
 function FrontController($http, translationService) {
     var vm = this;
 
-    //array of records for the table
+    //массив записей для заполнения таблицы
     vm.records = [];
-    //all records count in the database
+    //количество записей, удовлетворяющих критерию запроса
     vm.allRecordsCnt = 0;
-    //Math injecting
+    
     vm.Math = window.Math;
     
     vm.selectedLanguage = 'ru';
 
+    // количество записей на странице
     vm.pageSize = 100;
+
+    // общее количество страниц
     vm.numPages = 0;
-
-
-    //order by specified column
+    
+    // "id" выбранного пользователем столбца
     vm.predicate = -1;
-    //printing order - asc or desc
 
+    // направление сортировки
     vm.reverse = false;
+    // признак: сортировка включена/выключена
     vm.needSort = false;
 
     vm.currentPage = 1;
 
     vm.maxVisibleButtons = 10;
-
+    
+    // вспомогательная структура для фильтрации
     vm.search = {};
 
-    //daterangepicker init
-    var dateRangeSt = NaN;	//start point of range for filter
-    var dateRangeEnd = NaN; //end point of range for filter
+    //переменные для работы с daterangepicker
+    var dateRangeSt = NaN;	// начальная точка диапазона для фильтрации
+    var dateRangeEnd = NaN; // конечная точка диапазона для фильтрации
     var dateStartToServer = '';
     var dateEndToServer = '';
 
@@ -63,7 +67,6 @@ function FrontController($http, translationService) {
     }
 
     function dateRangeUpdatedCallback(start, end, label) {
-        alert("yyy");
         dateRangeSt = start;
         dateStartToServer = dateRangeSt.format('YYYY-MM-DD HH:mm');
         dateRangeEnd = end;
@@ -72,14 +75,10 @@ function FrontController($http, translationService) {
         //vm.pageChanged();
     }
 
-    //If daterangepicker is closed without date choosing and input is empty, 
-    //the input textbox contains a value of a date, but the model 'this.dateRange' doesn't.
-    //So, I need to handle an event when picker is closing and check if a date is correctly choosen or not.
-    //If it is not - erase this.
+    // метод для обработки ситуации, когда пользователь закрыл daterangepicker без выбора даты
     function ifDateSelectCancelled_WORKAROUND() {
         dateRangeElem.on('hide.daterangepicker', function (ev, picker) {
             var inputText = document.getElementById("input-dateRange").value;
-            alert("xxx");
             if (isNaN(dateRangeSt) && isNaN(dateRangeEnd) && inputText) {
                 document.getElementById("input-dateRange").value = '';
                 document.getElementById("resetDateFilter").click();
@@ -90,7 +89,6 @@ function FrontController($http, translationService) {
     vm.translate = function () {
         var wasClear = ((document.getElementById("input-dateRange").value == '') ? true : false);
         translationService.getTranslation(vm, vm.selectedLanguage);
-        //change locale and reconfigure the dateRangePicker
         moment.locale(vm.selectedLanguage);
         dateRangeElem.daterangepicker(dateRangeOptions, dateRangeUpdatedCallback);
         if (wasClear) {
@@ -140,7 +138,7 @@ function FrontController($http, translationService) {
     }
 
     
-
+    // группа обработчиков сообщений ng-click для кнопок сброса фильтров 
     vm.resetFilter = function () {
         vm.predicate = -1;
         vm.reverse = false;
@@ -179,27 +177,26 @@ function FrontController($http, translationService) {
         vm.pageChanged();
     }
 
-    //data loading:
 
     //using toastr instead of standart js alert
-    toastr.options = {
-        "closeButton": true,
-        "debug": false,
-        "newestOnTop": false,
-        "progressBar": false,
-        "positionClass": "toast-top-center",
-        "preventDuplicates": false,
-        "onclick": null,
-        "showDuration": "300",
-        "hideDuration": "1000",
-        "timeOut": 0,
-        "extendedTimeOut": 0,
-        "showEasing": "swing",
-        "hideEasing": "linear",
-        "showMethod": "fadeIn",
-        "hideMethod": "fadeOut",
-        "tapToDismiss": false
-    }
+    //toastr.options = {
+    //    "closeButton": true,
+    //    "debug": false,
+    //    "newestOnTop": false,
+    //    "progressBar": false,
+    //    "positionClass": "toast-top-center",
+    //    "preventDuplicates": false,
+    //    "onclick": null,
+    //    "showDuration": "300",
+    //    "hideDuration": "1000",
+    //    "timeOut": 0,
+    //    "extendedTimeOut": 0,
+    //    "showEasing": "swing",
+    //    "hideEasing": "linear",
+    //    "showMethod": "fadeIn",
+    //    "hideMethod": "fadeOut",
+    //    "tapToDismiss": false
+    //}
 
 
     var pageData = {
@@ -220,6 +217,7 @@ function FrontController($http, translationService) {
         pageData.country = vm.search.country;
         pageData.city = vm.search.city;
         pageData.street = vm.search.street;
+        pageData.house = vm.search.house;
         pageData.postcode = vm.search.postcode;
         pageData.dateStart = dateStartToServer;
         pageData.dateEnd = dateEndToServer;
@@ -227,7 +225,7 @@ function FrontController($http, translationService) {
         pageData.sortDir = vm.reverse;
         pageData.sortCol = vm.predicate;
 
-        
+        // запрос к серверу
         $http.post('/Main/GetData', pageData, { async: false }).success(function (data) {
 
             vm.records = data.adresses;
@@ -236,12 +234,10 @@ function FrontController($http, translationService) {
 
             vm.numPages = Math.ceil(vm.allRecordsCnt / vm.pageSize + 0.5);
 
-
-			//add an index to the model for showing in the table
+			// преобразование даты/времени из формата .NET Datetime в формат даты/времени Javascript
 		    for (var i = 0; i < vm.records.length; i++) {
 		        var date = new Date(parseInt(vm.records[i].created.substr(6)));
 		        vm.records[i].created = date;
-			    //vm.records[i].index = vm.startIndex + i;
 			}					
 		}).error(function (data, status, header, config) {
 		    toastr['error'](vm.translation.srvAnswErr);
@@ -253,7 +249,6 @@ function FrontController($http, translationService) {
 	    pageData.from = (vm.currentPage - 1) * vm.pageSize;
 	    vm.sendPageData();
 	}
-
 
 	vm.dateFilterGo = function () {
 	    vm.sendPageData();

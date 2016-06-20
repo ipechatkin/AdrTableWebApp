@@ -1,0 +1,25 @@
+/*
+.invisible {
+	display: none;
+}
+*/
+
+.dateSize {
+	width: 260px;	
+}
+
+#input-street {
+	width: 200px;
+}
+
+#input-houseNum{
+	width: 31px;
+}
+
+#input-indexNum {
+	width: 52px;
+}
+
+#input-dateRange {
+	width: 235px;
+}

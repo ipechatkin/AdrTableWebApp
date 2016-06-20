@@ -1,0 +1,28 @@
+{
+	"lang": "English",
+	"title": "Results",
+
+	"country": "Country",
+	"city": "City",
+	"street": "Street",
+	"house": "House",
+	"postcode": "Index",
+	"created": "Created",
+
+	"filt_country": "Country",
+	"filt_city": "City",
+	"filt_street": "Street",
+	"filt_house": "House",
+	"filt_postcode": "Index",
+	"filt_created": "Date range",	
+
+	"apply": "Apply",
+	"cancel": "Cancel",
+
+	"page": "Page",
+	"of": "of",
+
+	"cntRecords": "Records in database",
+	
+	"srvAnswErr": "Unable to get an answer from the server!"
+}

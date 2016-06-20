@@ -1,0 +1,28 @@
+{
+	"lang": "Русский",
+	"title": "Результаты",
+
+	"country": "Страна",
+	"city": "Город",
+	"street": "Улица",
+	"house": "Дом",
+	"postcode": "Индекс" ,
+	"created": "Дата создания записи",
+
+	"filt_country": "Страна",
+	"filt_city": "Город",
+	"filt_street": "Улица",
+	"filt_house": "Дом",
+	"filt_postcode": "Индекс",
+	"filt_created": "Диапазон дат",	
+
+	"apply": "Применить",
+	"cancel": "Отмена",
+
+	"page": "Страница",
+	"of": "из",
+
+	"cntRecords": "Записей в базе",
+
+	"srvAnswErr": "Нет ответа от сервера"
+}

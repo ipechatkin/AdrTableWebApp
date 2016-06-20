@@ -1,0 +1,202 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">        
+        <title>Test application</title>
+        
+        <link href='Content/css/bootstrap.min.css' rel="stylesheet">
+        <link href='Content/css/font-awesome.min.css' rel="stylesheet">
+        <link href='Content/css/daterangepicker.css' rel="stylesheet">
+        <link href='Content/css/toastr.css' rel="stylesheet">
+        <link href='Content/css/style.css' rel="stylesheet">         
+        
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+            
+    </head>
+    <body>
+        <div ng-app="table-app" ng-controller="FrontController as filt" class="container-fluid">
+        
+              <div class="row">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                               <!-- <p class="text-center">
+                                    <a href="#" ng-click="filt.order('index')">
+                                        #
+                                        <span ng-show="filt.predicate === 'index'" ng-class="filt.reverse ? 'fa fa-caret-up' : 'fa fa-caret-down'"></span>
+                                    </a>
+                                </p>-->
+                            </th>
+                            <th>
+                                <p class="text-center">
+                                    <a href="#" ng-click="filt.order(0)">
+                                        {{filt.translation.country}}
+                                        <span ng-show="filt.predicate === 0" ng-class="filt.reverse ? 'fa fa-caret-up' : 'fa fa-caret-down'"></span>
+                                    </a>
+                                </p>
+                            </th>
+                            <th>
+                                <p class="text-center">
+                                    <a href="#" ng-click="filt.order(1)">
+                                        {{filt.translation.city}}                               
+                                        <span ng-show="filt.predicate === 1" ng-class="filt.reverse ? 'fa fa-caret-up' : 'fa fa-caret-down'"></span>
+                                    </a>
+                                </p>
+                            </th>
+                            <th>
+                                <p class="text-center">
+                                    <a href="#" ng-click="filt.order(2)">
+                                        {{filt.translation.street}}
+                                        <span ng-show="filt.predicate === 2" ng-class="filt.reverse ? 'fa fa-caret-up' : 'fa fa-caret-down'"></span>
+                                    </a>                            
+                                </p>
+                            </th>
+                            <th>
+                                <p class="text-center">
+                                    <a href="#" ng-click="filt.order(3)">
+                                        {{filt.translation.house}}
+                                        <span ng-show="filt.predicate === 3" ng-class="filt.reverse ? 'fa fa-caret-up' : 'fa fa-caret-down'"></span>
+                                    </a>
+                                </p>
+                            </th>
+                            <th>
+                                <p class="text-center">
+                                    <a href="#" ng-click="filt.order(4)">
+                                        {{filt.translation.postcode}}
+                                        <span ng-show="filt.predicate === 4" ng-class="filt.reverse ? 'fa fa-caret-up' : 'fa fa-caret-down'"></span>
+                                    </a>
+                                </p>
+                            </th>
+                            <th>
+                                <p class="text-center">
+                                    <a href="#" ng-click="filt.order(5)">
+                                        {{filt.translation.created}}                               
+                                        <span ng-show="filt.predicate === 5" ng-class="filt.reverse ? 'fa fa-caret-up' : 'fa fa-caret-down'"></span>
+                                    </a>
+                                </p>
+                            </th>
+                        </tr>   
+                        
+                        <!--start of filt-->
+                        <tr>
+                            <form id="filterForm" class="well">
+                                <td>
+                                    <button ng-click="filt.resetFilter()" class="btn btn-primary center-block" type="button">
+                                        <i class="fa fa-refresh" aria-hidden="true"></i>
+                                    </button>
+                                </td>
+                                <td>
+                                    <p class="text-center">
+                                        <input ng-model="filt.search.country" type="text" class="input-medium" ng-change="filt.dateFilterGo()" placeholder="{{filt.translation.filt_country}}" name="country"/>
+                                        <button class="glyphicon glyphicon-remove" ng-click="filt.dateCountryClear()" id="resetCountryFilter"></button>
+                                    </p>            
+                                </td>                           
+                                <td>
+                                    <p class="text-center">
+                                        <input ng-model="filt.search.city" type="text" class="input-medium" ng-change="filt.dateFilterGo()" placeholder="{{filt.translation.filt_city}}" name="city"/>
+                                        <button class="glyphicon glyphicon-remove" ng-click="filt.dateCityClear()" id="resetCityFilter"></button>
+                                    </p>                                    
+                                </td>
+                                <td>
+                                    <p class="text-center">
+                                        <input ng-model="filt.search.street" type="text" class="input-medium" ng-change="filt.dateFilterGo()" placeholder="{{filt.translation.filt_street}}" name="street"/>
+                                        <button class="glyphicon glyphicon-remove" ng-click="filt.dateStreetClear()" id="resetStreetFilter"></button>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="text-center">
+                                        <input ng-model="filt.search.house" type="text" class="input-medium" ng-change="filt.dateFilterGo()" placeholder="{{filt.translation.filt_house}}" name="houseNum"/>
+                                        <button class="glyphicon glyphicon-remove" ng-click="filt.dateHouseClear()" id="resetHouseFilter"></button>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="text-center">
+                                        <input ng-model="filt.search.postcode" type="text" class="input-medium" ng-change="filt.dateFilterGo()" placeholder="{{filt.translation.filt_postcode}}" name="indexNum"/>
+                                        <button class="glyphicon glyphicon-remove" ng-click="filt.datePostCodeClear()" id="resetPostCodeFilter"></button>
+                                    </p>
+                                </td>
+                                <td>
+                                    <p class="text-center">
+                                        <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                                        <input type="text" ng-model="filt.dateRange" class="input-medium" ng-change="filt.dateFilterGo()" placeholder="{{filt.translation.filt_created}}" name="dateRange" id="input-dateRange"/>
+                                        <button class="glyphicon glyphicon-remove" ng-click="filt.dateRangeClear()" id="resetDateFilter"></button>
+                                    </p>
+                                </td>
+                                <!-- <input type="submit" class="invisible" /> -->
+                            </form>                                 
+                        </tr>
+                    <!--end of filt-->                                 
+                    </thead>                
+                    <tbody>
+                        <!--Repeat from this..-->              
+                             
+                        <tr ng-repeat="record in filt.records">
+                            <td><p> {{record.id}}</p></td>
+                            <td><p><span ng-style="(filt.predicate === 0) || (filt.search.country) ? {color:'blue'} : {color:'black'}">{{record.country}}</span></p></td>
+                            <td><p><span ng-style="(filt.predicate === 1) || (filt.search.city) ? {color:'blue'} : {color:'black'}">{{record.city}}</span></p></td>
+                            <td><p><span ng-style="(filt.predicate === 2) || (filt.search.street) ? {color:'blue'} : {color:'black'}">{{record.street}}</span></p></td>
+                            <td><p><span ng-style="(filt.predicate === 3) || (filt.search.house) ? {color:'blue'} : {color:'black'}">{{record.house}}</span></p></td>
+                            <td><p><span ng-style="(filt.predicate === 4) || (filt.search.postcode) ? {color:'blue'} : {color:'black'}">{{record.postcode}}</span></p></td>
+                            <td><p><span ng-style="(filt.predicate === 5) || (filt.dateRange) ? {color:'blue'} : {color:'black'}">{{record.created | date:'yyyy-MM-dd HH:mm:ss'}}</span></p></td>
+                        </tr>
+                        <!--..to that-->
+                    </tbody>
+                </table>
+            </div>
+
+
+
+             <div class="row">
+                <div class="col-md-4">
+                
+                    <!--<div class="btn-group">          
+                        <button class="btn btn-default">
+                            {{filt.pageSize}}
+                        </button> 
+                        <button data-toggle="dropdown" class="btn btn-default dropdown-toggle">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="filt.setPageSize(10)" href="#">10</a></li>
+                            <li><a ng-click="filt.setPageSize(25)" href="#">25</a></li>
+                            <li><a ng-click="filt.setPageSize(50)" href="#">50</a></li>
+                            <li><a ng-click="filt.setPageSize(100)" href="#">100</a></li>                    
+                        </ul>
+                    </div> -->
+               
+                </div>
+                <div class="col-md-4">
+                    <p class="text-center">
+                        <span class="label label-primary">{{filt.translation.page}} {{filt.currentPage}} {{filt.translation.of}} {{filt.numPages}}</span>
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <p class="pull-right">
+                        <span class="label label-primary">{{filt.translation.cntRecords}}: {{filt.allRecordsCnt}}</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="col-md-12 text-center">
+                <uib-pagination ng-model="filt.currentPage" ng-change="filt.pageChanged()" total-items="filt.allRecordsCnt" max-size="filt.maxVisibleButtons" items-per-page="filt.pageSize" num-pages="filt.numPages" class="pagination-sm" boundary-links="true" force-ellipses="true" first-text="<<" previous-text="<" next-text=">" last-text=">>"></uib-pagination>
+            </div>
+
+        </div>
+
+
+        <script src='Scripts/jquery.min.js'></script>
+        <script src='Scripts/bootstrap.min.js'></script>
+        <script src='Scripts/moment-with-locales.js'></script>
+        <script src='Scripts/daterangepicker.min.js'></script>
+        <script src='Scripts/angular.min.js'></script>
+        <script src='Scripts/angular-resource.min.js'></script>
+        <script src='Scripts/ui-bootstrap-tpls-1.3.2.min.js'></script>
+        <script src='Scripts/ng-bs-daterangepicker.js'></script>
+        <script src='Scripts/toastr.min.js'></script>
+        <script src='Scripts/scripts1.js'></script>  
+
+    </body>
+</html>

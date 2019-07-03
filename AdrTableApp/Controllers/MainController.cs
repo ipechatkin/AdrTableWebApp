@@ -10,19 +10,6 @@ using System.Linq.Expressions;
 
 namespace AdrTableApp.Controllers
 {
-    //public struct SortFlags 
-    //{
-    //    public int country { get; set; }
-    //    public int city { get; set; }
-    //    public int street { get; set; }
-    //    public int house { get; set; }
-    //    public int postcode { get; set; }
-    //    public int created { get; set; }
-    //} 
-
-    //public delegate IEnumerable<Adress> SortPredicate()
-
-    
 
     public struct PageData
     {
